@@ -34,7 +34,7 @@ if "u wanna use myworlds reanimation" then
     local R15toR6 = true --tries to convert your character to r6 if its r15
     local hatcollide = false --makes hats cancollide (credit to ShownApe) (works only with reanimate method 0)
     local humState16 = true --enables collisions for limbs before the humanoid dies (using hum:ChangeState)
-    local addtools = false --puts all tools from backpack to character and lets you hold them after reanimation
+    local addtools = true --puts all tools from backpack to character and lets you hold them after reanimation
     local hedafterneck = true --disable aligns for head and enable after neck or torso is removed
     local loadtime = game:GetService("Players").RespawnTime + 0.5 --anti respawn delay
     local method = 1--reanimation method
@@ -1008,7 +1008,7 @@ local function part(name, main)
         c = nil
     end)
     if not main then
-        name = randomstring()
+        --name = randomstring()
     end
     local con = nil
     con = stepped:Connect(function()
@@ -1034,14 +1034,7 @@ for i, v in pairs(c:GetDescendants()) do
     end
 end
 
-for i, v in pairs(c:GetChildren()) do
-    if v:IsA("Accessory") then
-        local handle = gp(v, "Handle", "BasePart")
-        handle.Name = randomstring()
-        handle.Parent = c
-        v:Destroy()
-    end
-end
+
 
 local Torso = part("Torso", false)
 local RightArm = part("Right Arm", false)
