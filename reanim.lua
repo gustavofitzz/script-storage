@@ -37,7 +37,7 @@ if "u wanna use myworlds reanimation" then
     local addtools = true --puts all tools from backpack to character and lets you hold them after reanimation
     local hedafterneck = true --disable aligns for head and enable after neck or torso is removed
     local loadtime = game:GetService("Players").RespawnTime + 0.5 --anti respawn delay
-    local method = 1--reanimation method
+    local method = 3 --reanimation method
     --methods:
     --0 - breakJoints (takes [loadtime] seconds to load)
     --1 - limbs
@@ -1008,7 +1008,7 @@ local function part(name, main)
         c = nil
     end)
     if not main then
-        --name = randomstring()
+        name = randomstring()
     end
     local con = nil
     con = stepped:Connect(function()
@@ -1034,7 +1034,14 @@ for i, v in pairs(c:GetDescendants()) do
     end
 end
 
-
+for i, v in pairs(c:GetChildren()) do
+    if v:IsA("Accessory") then
+        local handle = gp(v, "Handle", "BasePart")
+        handle.Name = randomstring()
+        handle.Parent = c
+        v:Destroy()
+    end
+end
 
 local Torso = part("Torso", false)
 local RightArm = part("Right Arm", false)
