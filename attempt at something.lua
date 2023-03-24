@@ -140,7 +140,7 @@ function LibraryV2.UI(Name)
 
     local Library
     Library = {
-        _UI = game:GetObjects("rbxassetid://8388979705")[1],
+        _UI = game:GetObjects("rbxassetid://12880916580")[1],
         Name = Name or "Untitled",
         Tabs = {},
         State = false,
@@ -179,8 +179,6 @@ function LibraryV2.UI(Name)
 
         Startup = function()
             local TUI = Library._UI
-            --local Widgets = TUI.Widgets
-            --local Widget1, Widget2, Widget3, Widget4 = Widgets.Bookmarks, Widgets.Widget, Widgets.Discord, Widgets.Music
             local Tabs = TUI.TabContainer
             local BottomMenu = TUI.BottomMenu
             local TopMenu = TUI.Top
@@ -193,19 +191,6 @@ function LibraryV2.UI(Name)
             local TimePos = Time.Position
             local TLPos = TimeLabel.Position
             local Transparency_Back = TUI.Darkener.BackgroundTransparency
-            --local Widgets = {Widget1, Widget2, Widget3, Widget4}
-            --local WidgetPos = {
-                
-           --     Widget1.Position,
-           --     Widget2.Position,
-            --    Widget3.Position,
-            --    Widget4.Position
-                
-            --}
-            
-            --for i,v in pairs(Widgets) do
-            --    v.Position = UDim2.new(v.Position.X.Scale, v.Position.X.Offset, 1, v.Position.Y.Offset)
-            --end
             Tabs.Position = UDim2.new(-0.05, Tabs.Position.X.Offset, Tabs.Position.Y.Scale, Tabs.Position.Y.Offset)
             BottomMenu.Position = UDim2.new(BottomMenu.Position.X.Scale, BottomMenu.Position.X.Offset, 1, BottomMenu.Position.Y.Offset)
             TopMenu.Position = UDim2.new(TopMenu.Position.X.Scale, TopMenu.Position.X.Offset, -0.15, TopMenu.Position.Y.Offset)
@@ -213,21 +198,12 @@ function LibraryV2.UI(Name)
             TimeLabel.TextTransparency = 1
             TUI.Darkener.BackgroundTransparency = 1
             
-            for i,v in pairs(Library._UI:GetChildren()) do
-                if v.ClassName ~= "Folder" and v.Name ~= "Darkener" and v.Name ~= "MusicPlayer" then
-                    v.Visible = true
-                end
-            end
 
-            --for i,v in pairs(Library._UI.Widgets:GetChildren()) do
-            --    v.Visible = true
-            --end
-            
+
             game.StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.All, false)
 
             --// Animate
             Tween(TUI.Darkener, {BackgroundTransparency = Transparency_Back}, 0.5, true)
-            --TandemTween(WidgetPos, Widgets, 0.5)
             Tween(BottomMenu, {Position = BMPos}, 0.25)
             Tween(Tabs, {Position = TabsPos}, 0.25)
             Tween(TopMenu, {Position = TPos}, 0.25, true)
@@ -287,157 +263,10 @@ function LibraryV2.UI(Name)
 
     ELib_Data.Last_Visit = os.date("%x", os.time())
     SaveData()
-    --[[
-    no
-    --// Music System
-    local Widgets = Library._UI.Widgets
-    local MusicWidget = Widgets.Music
-
-    local Spotify
-    Spotify = MusicWidget.Spotify.MouseButton1Click:Connect(function()
-        Spotify:Disconnect()
-        task.wait(0.5)
-
-        Tween(MusicWidget.Spotify, {ImageTransparency = 1}, 0.3)
-        Tween(MusicWidget.Soundcloud, {ImageTransparency = 1}, 0.3)
-        task.wait(0.5)
-
-        local String = MusicWidget.Under.Text
-        for i = #MusicWidget.Under.Text, 0, -1 do
-            MusicWidget.Under.Text = string.sub(String, 0, i)
-            task.wait(0.1)
-        end
-
-        local TokenData
-		local Data = pcall(function()
-			TokenData = readfile("spotify.elib")
-		end)
-
-        if not Data then
-            local Typestring = "enter your spotify token"
-            for i = 0, #Typestring, 1 do
-                MusicWidget.Under.Text = string.sub(Typestring, 0, i)
-                task.wait(0.1)
-            end
-            Tween(MusicWidget.TokenBox, {Position = u2(0.5, 0, 0.775, 0)}, 0.5)
-            task.wait(0.5)
-
-            local Focus
-            Focus = MusicWidget.TokenBox.FocusLost:Connect(function()
-                if MusicWidget.TokenBox.Text ~= "" then
-                    Focus:Disconnect()
-                    writefile("spotify.elib", MusicWidget.TokenBox.Text)
-                    TokenData = MusicWidget.TokenBox.Text
-                    Tween(MusicWidget.TokenBox, {Position = u2(0.5, 0, 1, 0)}, 0.5)
-                end
-            end)
-        end
-        repeat wait() until TokenData ~= nil
-        local String = MusicWidget.Under.Text
-        for i = #MusicWidget.Under.Text, 0, -1 do
-            MusicWidget.Under.Text = string.sub(String, 0, i)
-            task.wait(0.1)
-        end
-        
-        local Typestring = "enjoy"
-        for i = 0, #Typestring, 1 do
-            MusicWidget.Under.Text = string.sub(Typestring, 0, i)
-            task.wait(0.1)
-        end
-
-        --// API stuff
-
-        function ConvertTime(Seconds)
-            local Minutes = (Seconds - Seconds%60)/60
-            Seconds = Seconds - Minutes*60
-
-            local Hours = (Minutes - Minutes%60)/60
-            Minutes = Minutes - Hours*60
-
-            return Format(Minutes)..":"..Format(Seconds)
-        end
-
-        local Spotify = function(url,method,token)
-            local success, res = pcall(syn.request, {
-                    Url = url,
-                    Method = method,
-                    Headers = {
-                        ["Accept"] = "application/json",
-                        ["Authorization"] = 'Bearer ' .. token,
-                        ["Content-Type"] = "application/json"
-                    }
-            })
-            if success == true and type(res) == "table" and #res.Body > 0 then
-                local parsed = game.HttpService:JSONDecode(res.Body)
-                return {
-                    Artist = parsed['item']['artists'][1]['name'],
-                    Title = parsed['item']['name'],
-                    Current = parsed['progress_ms'],
-                    Maximum = parsed['item']['duration_ms'],
-                    Playing = parsed['is_playing'],
-                }
-            else
-                return {
-                    Artist = 'Failed to get artist',
-                    Title = 'Failed to get song name',
-                    Current = 'nil',
-                    Maximum = 'nil'
-                }
-            end
-        end
-
-        Tween(MusicWidget.Previous, {ImageTransparency = 0}, 0.3)
-        Tween(MusicWidget.Skip, {ImageTransparency = 0}, 0.3)
-        Tween(MusicWidget.Pause, {ImageTransparency = 0}, 0.3)
-        Library._UI.MusicPlayer.Visible = true
-
-        local MusicPlayer = Library._UI.MusicPlayer
-
-        MusicWidget.Previous.MouseButton1Click:Connect(function()
-            pcall(Spotify, 'https://api.spotify.com/v1/me/player/previous', 'POST', TokenData)
-        end)
-
-        MusicWidget.Skip.MouseButton1Click:Connect(function()
-            pcall(Spotify, 'https://api.spotify.com/v1/me/player/next', 'POST', TokenData)
-        end)
-
-        MusicWidget.Pause.MouseButton1Click:Connect(function()
-            if MusicWidget.Pause.Image == "rbxassetid://6026663719" then
-                pcall(Spotify, 'https://api.spotify.com/v1/me/player/pause', 'PUT', TokenData)
-            else
-                pcall(Spotify, 'https://api.spotify.com/v1/me/player/play', 'PUT', TokenData)
-            end
-        end)
-
-        while wait(0.25) do
-            local Data_, Returned = pcall(Spotify, 'https://api.spotify.com/v1/me/player/currently-playing', 'GET', TokenData)
-            if Data_ then
-                local Current = math.floor(Returned.Current/1000)
-                local Max = math.floor(Returned.Maximum/1000)
-
-                MusicPlayer.Song.Text = Returned.Title
-                MusicPlayer.Author.Text = Returned.Artist
-                MusicPlayer.Time.Text =  ConvertTime(Current)
-                MusicPlayer.End.Text = ConvertTime(Max)
-                MusicPlayer.Timeline:TweenSize(u2(Current/Max, 0, 1, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, .25)
-                
-                if Returned.Playing then
-                    MusicWidget.Pause.Image = "rbxassetid://6026663719"
-                else
-                    MusicWidget.Pause.Image = "rbxassetid://6026663699"
-                end
-                if Returned.Artist == "" then
-                    MusicPlayer.Author.Text = "No artist found"
-                end
-            end
-        end
-
-
-    end)
-
-    Widgets.Discord.TextButton.MouseButton1Click:Connect(function()
-        setclipboard("This is for aesthetic though i may update it so you can plug your discord here.")
-    end)
+    
+    --no
+    
+    
 
     game:GetService("UserInputService").InputBegan:Connect(function(Key, IsTyping)
         if IsTyping then
@@ -449,7 +278,7 @@ function LibraryV2.UI(Name)
             Library.Update()
         end
     end)
-    ]]
+    
     return setmetatable(Library, LibraryV2)
 end
 
