@@ -449,10 +449,10 @@ function LibraryV2.UI(Name)
             Library.Update()
         end
     end)
-
+    ]]
     return setmetatable(Library, LibraryV2)
 end
-]]
+
 function LibraryV2:Tab(Name, Icon)
     local Tab
     Tab = {
