@@ -78,7 +78,7 @@ height = 0;
 heighti = 1;
 _G._G.offsett = 3;
 _G.speed = 0.5;
-mode = 9;
+_G.mode = 9;
 _G.offsettt  = 35;
 _G.speedd = 20;
 _G.val1 = 0;
@@ -112,39 +112,39 @@ game['Run Service'].RenderStepped:Connect(function()
 		heighti = 1;
 	end
 	
-	if mode == 1 then
+	if _G.mode == 1 then
 		for _, v in pairs(mov) do
 			v.Position = Vector3.new(math.sin(rotx) * _G.offsett, 0, math.sin(rotz) * _G.offsett);
 		end
-	elseif mode == 2 then
+	elseif _G.mode == 2 then
 		for _, v in pairs(mov) do
 			v.Position = Vector3.new(_G.offsett, height, _G.offsett);
 		end
-	elseif mode == 3 then
+	elseif _G.mode == 3 then
 		for _, v in pairs(mov) do
 			v.Position = Vector3.new(math.sin(rotx) * _G.offsett, height, math.sin(rotz) * _G.offsett);
 		end
-	elseif mode == 4 then
+	elseif _G.mode == 4 then
 		for i, v in pairs(mov) do
 			v.Position = Vector3.new(chr.HumanoidRootPart.CFrame:ToObjectSpace(CFrame.new(par[i].Position)).X, chr.HumanoidRootPart.CFrame:ToObjectSpace(CFrame.new(par[i].Position)).Y, chr.HumanoidRootPart.CFrame:ToObjectSpace(CFrame.new(par[i].Position)).Z);
 		end
-	elseif mode == 5 then
+	elseif _G.mode == 5 then
 		for i, v in pairs(mov) do
 			v.Position = Vector3.new((math.sin(rotx)) * _G.offsett, height, (math.cos(rotz) - i) * _G.offsett);
 		end
-	elseif mode == 6 then
+	elseif _G.mode == 6 then
 		for i, v in pairs(mov) do
 			v.Position = Vector3.new((math.sin(rotx)) * _G.offsett, height, (math.tan(rotz) - i) * _G.offsett);
 		end
-	elseif mode == 7 then
+	elseif _G.mode == 7 then
 		for i, v in pairs(mov) do
 			v.Position = Vector3.new(math.cos(rotx * i) * _G.offsett, 0, math.cos(rotz * i) * _G.offsett);
 		end
-	elseif mode == 8 then
+	elseif _G.mode == 8 then
 	    for i, v in pairs(mov) do
 			v.Position = Vector3.new(math.sin(rotx) * i * _G.offsett, 0, math.sin(rotz) * i * _G.offsett);
 		end
-	elseif mode == 9 then
+	elseif _G.mode == 9 then
 		pcall(function()
 			local so = nil;
 			for k, b in pairs(workspace:GetChildren()) do
@@ -166,12 +166,12 @@ game['Run Service'].RenderStepped:Connect(function()
 		for i, v in pairs(mov) do
 			v.Position = Vector3.new(chr.HumanoidRootPart.CFrame:ToObjectSpace(CFrame.new(par[i].Position)).X, chr.HumanoidRootPart.CFrame:ToObjectSpace(CFrame.new(par[i].Position)).Y, chr.HumanoidRootPart.CFrame:ToObjectSpace(CFrame.new(par[i].Position)).Z);
 		end
-	elseif mode == 10 then
+	elseif _G.mode == 10 then
 		_G.offsett = height * 15;
 		for i, v in pairs(mov) do
 			v.Position = Vector3.new(chr.HumanoidRootPart.CFrame:ToObjectSpace(CFrame.new(par[i].Position)).X, chr.HumanoidRootPart.CFrame:ToObjectSpace(CFrame.new(par[i].Position)).Y, chr.HumanoidRootPart.CFrame:ToObjectSpace(CFrame.new(par[i].Position)).Z);
 		end
-	elseif mode == 11 then
+	elseif _G.mode == 11 then
 		for i, v in pairs(mov) do
 			v.Position = Vector3.new(chr.HumanoidRootPart.CFrame:ToObjectSpace(CFrame.new(plr:GetMouse().Hit.p)).X, chr.HumanoidRootPart.CFrame:ToObjectSpace(CFrame.new(plr:GetMouse().Hit.p)).Y, chr.HumanoidRootPart.CFrame:ToObjectSpace(CFrame.new(plr:GetMouse().Hit.p)).Z) + Vector3.new(chr.HumanoidRootPart.CFrame:ToObjectSpace(CFrame.new(par[i].Position)).X, chr.HumanoidRootPart.CFrame:ToObjectSpace(CFrame.new(par[i].Position)).Y, chr.HumanoidRootPart.CFrame:ToObjectSpace(CFrame.new(par[i].Position)).Z);
 		end
@@ -190,8 +190,8 @@ game.Players.LocalPlayer.Chatted:Connect(function(c)
 	if c:split(' ')[1] == '._G.speed' then
 		_G.speed = tonumber(c:split(' ')[2]);
 	end
-	if c:split(' ')[1] == '.mode' then
-		mode = tonumber(c:split(' ')[2]);
+	if c:split(' ')[1] == '._G.mode' then
+		_G.mode = tonumber(c:split(' ')[2]);
 	end
 	if c:split(' ')[1] == '._G.offset' then
 		_G.offset = tonumber(c:split(' ')[2]);
