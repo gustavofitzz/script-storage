@@ -5,6 +5,7 @@ local mov = {};
 local mov2 = {};
 --local gamerpart = Instance.new("Part")
 --[[Network]]
+--[[
 coroutine.resume(coroutine.create(function()
 	settings().Physics.AllowSleep = false;
 	game.RunService.RenderStepped:Connect(function()
@@ -17,7 +18,7 @@ coroutine.resume(coroutine.create(function()
 		end
 	end)
 end))
-
+]]
 function ftp(str)
     local pt = {};
     if str ~= 'me' and str ~= 'random' then
