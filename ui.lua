@@ -377,7 +377,7 @@ function library:CreateWindow(name, version, icon)
 			SectionContainer.BorderSizePixel = 0
 			SectionContainer.ClipsDescendants = true
 			SectionContainer.Position = UDim2.new(0, 0, 1.25310734e-07, 0)
-			SectionContainer.Size = UDim2.new(1, 0, 1.1033654, -1)
+			SectionContainer.Size = UDim2.new(1, 0, 1.0233654, -1)
 			SectionContainer.ZIndex = 2
 
 			Header.Name = "Header"
