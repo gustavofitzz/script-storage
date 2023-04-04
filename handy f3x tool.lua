@@ -1,5 +1,5 @@
 local f3x = {}
-local plr = game.LocalPlayer
+local plr = game.Players.LocalPlayer
 local bck = plr.Backpack
 local character = plr.Character
 local btools = character:FindFirstChild("Building Tools") or bck:FindFirstChild("Building Tools")
