@@ -1,6 +1,6 @@
 local f3x = {}
 local plr = game.Players.LocalPlayer
-local bck = plr.Backpack
+local bck = game.Players.LocalPlayer.Backpack
 local character = plr.Character
 local btools = character:FindFirstChild("Building Tools") or bck:FindFirstChild("Building Tools")
 function f3x:printtest(var1)
