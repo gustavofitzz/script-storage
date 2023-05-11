@@ -1,8 +1,9 @@
 --TODO stop using usernames and use user ids DONE
 --t1 warning upon game joining
+--t2 vip commands revoked
 --t5 global ban from some games
 blacklistTIER1 = {"1817633556"}
-blacklistTIER2 = {""}
+blacklistTIER2 = {"4246265834"}
 blacklistTIER3 = {"4472031176"}
 blacklistTIER4 = {""}
 blacklistTIER5 = {"1994698149","4231931255","2604386597"}
